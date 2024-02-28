@@ -23,6 +23,7 @@ const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
                 let customerProfiledata = await mysqlHelper.format(`
                 SELECT
                 bu.uuid,
+                concat(bu.first_name, " ",bu.last_name),
                 bu.email,
                 bu.mobile_number,
                 bu.profile_picture,

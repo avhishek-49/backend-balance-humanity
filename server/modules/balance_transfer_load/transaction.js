@@ -122,10 +122,18 @@ const { mysqlHelper } = require("../../helpers");
                       `)
 
                         let [addResult] = await mysqlHelper.query(add);
+                
 
 
 
                         if (subtractRes && addResult && subtractRes.affectedRows > 0 && addResult.affectedRows > 0) {
+
+                            const today = new Date();
+                            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                            const formattedDate = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+
+
+                            const message = `Dear customer, your transaction has been successfully executed with an amount of Rs. ${call.body.amount} on transaction date ${formattedDate}.`;
 
                             const logdataTransaction = {
 
@@ -140,7 +148,8 @@ const { mysqlHelper } = require("../../helpers");
                                 status: 'sucess',
                                 transaction_payload: JSON.stringify(call.body),
                                 createdAt: new Date().getTime(),
-                                updatedAt: new Date().getTime()
+                                updatedAt: new Date().getTime(),
+                                message_config:message
                             };
 
 
@@ -173,7 +182,7 @@ const { mysqlHelper } = require("../../helpers");
 
             // return response;
         } catch (error) {
-            return res.status(200).json({ status: httpStatus.BAD_REQUEST, message: "data not found" });
+            return res.status(500).json({ status: httpStatus.INTERNAL_SERVER_ERROR, message: "Internal server errror" });
 
         }
     };
