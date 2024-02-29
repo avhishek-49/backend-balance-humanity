@@ -23,6 +23,8 @@ router.post("/login", login);
 router.post("/register", registerBalanceHumanity);
 router.post("/forgot-password", protect, forgotPassword);
 router.get("/get-district_dropdown", getDistrictDropDown);
+
+//admin part
 router.get("/get-customer", protect, authorization(["superCustomer"]), getCustomerInfo);
 
 //balance load and uload part
