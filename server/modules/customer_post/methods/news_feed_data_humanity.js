@@ -14,21 +14,29 @@ const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
                 console.log("dfsf", nearestDistrict);
 
 
-                let customerPostData = await mysqlHelper.format(`
-    select
-    p.id,
-    p.district_name,
-    p.description,
-    p.image_minio_url as image,
-    concat(bu.first_name," ", bu.last_name) as fullName,
-    bu.email,
-    bu.mobile_number as mobileNumber
-from db_balance_humanity.balance_humanity_blog_post p
-
-left join db_balance_humanity.balance_humanity_users bu
-on p.customer_id = bu.uuid
-order by p.id desc
-`)
+                let customerPostData = await mysqlHelper.format(`  
+                SELECT 
+                p.id,
+                di.name,
+                p.description,
+                p.image_minio_url AS image,
+                CONCAT(bu.first_name, ' ', bu.last_name) AS fullName,
+                bu.email,
+                bu.mobile_number AS mobileNumber,
+                FROM_UNIXTIME(p.created_date / 1000, '%M %e, %Y') AS postCreateDate,
+                CASE
+                    WHEN ac.account_number IS NOT NULL THEN ac.account_number
+                    ELSE 'N/A'
+                END AS accountNumber
+            FROM
+                db_balance_humanity.balance_humanity_blog_post p
+                    LEFT JOIN
+                db_balance_humanity.balance_humanity_users bu ON p.customer_id = bu.uuid
+                    LEFT JOIN
+                db_balance_humanity.latitude_longitude_district_info di ON di.id = p.district_name
+                    LEFT JOIN
+                db_balance_humanity.customer_account_information AS ac ON ac.customer_id = bu.uuid
+            ORDER BY p.id DESC;`)
 
                 let [everyCustomerPost] = await mysqlHelper.query(customerPostData);
 
