@@ -12,7 +12,7 @@ dotenv.config({path: ""});
                 dbClient = mysql.createPool({
                     host: "localhost",
                     user:"root",
-                    password: "P@ssw0rd",
+                    password: "1234",
                     database: "db_balance_humanity",
                 });
                 console.log("MySQL connection pool initialized successfully!");

@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "P@ssw0rd",
+    "password": "1234",
     "database": "db_balance_humanity",
     "host": "localhost",
     "dialect": "mysql"
