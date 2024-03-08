@@ -22,6 +22,9 @@ const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
                 p.image_minio_url AS image,
                 CONCAT(bu.first_name, ' ', bu.last_name) AS fullName,
                 bu.email,
+                case  WHEN bu.profile_picture IS NOT NULL THEN bu.profile_picture
+                ELSE "N/A"
+                END as profilePicture,
                 bu.mobile_number AS mobileNumber,
                 FROM_UNIXTIME(p.created_date / 1000, '%M %e, %Y') AS postCreateDate,
                 CASE

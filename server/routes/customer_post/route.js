@@ -32,6 +32,9 @@ const {
 
 // Define routes
 router.post("/create", protect, createCustomerPost); // Ensure field name matches your form
+//like comment part
+
+
 router.get("/get-me", protect, getMeCustomerPost);
 router.get("/get-all", protect, readAllCustomerPost);
 router.put("/update", protect, updateCustomerPost);
