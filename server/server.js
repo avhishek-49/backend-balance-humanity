@@ -5,6 +5,7 @@ dotenv.config({path: "./.env"});
 let {mysqlHelper} = require("./helpers/index");
 let minioHelper = require("./helpers/minio_helper.js");
 const cors = require("cors");
+const cronJobService = require("./cron_jobs");
 
 app.use(express.json());
 app.use(cors());
@@ -27,4 +28,5 @@ console.log(`Server is running on http://localhost:${port}`);
 await mysqlHelper.init();
 await minioHelper.init();
 await redisInit();
+await cronJobService.init()
 });

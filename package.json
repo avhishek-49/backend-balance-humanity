@@ -20,7 +20,7 @@
     "seed:undo:all": "npx sequelize-cli db:seed:undo:all",
     "postinstall": "mkdir -p test/coverage",
     "pull:all": "git pull origin develop && git pull origin testing && npm pull origin staging",
-    "windows-minio-init":"minio.exe server C:minio --console-address :9001  add some slash"
+    "windows-minio-init": "minio.exe server C:minio --console-address :9001  add some slash"
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +38,7 @@
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.5",
+    "node-schedule": "^2.1.1",
     "nodemailer": "^6.9.8",
     "redis": "^4.6.12",
     "sequelize": "^6.37.1",
