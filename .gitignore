@@ -5,3 +5,5 @@ logger
 .vscode
 /test.js
 uploads
+start
+test

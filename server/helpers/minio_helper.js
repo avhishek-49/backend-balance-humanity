@@ -459,6 +459,50 @@ minioHelper.uploadToSpecificBucket = async (bucketName, file) => {
 };
 
 
+
+//upload minio videos
+
+minioHelper.uploadVideo = async (uploadBucket, file) => {
+    let response = {status: httpStatus.INTERNAL_SERVER_ERROR, message: `Video upload failed.`};
+    return new Promise((resolve, reject) => {
+        let fileStream = fs.readFileSync(file.path);
+        let fileExtension = file.originalname.split(".")[1].toLowerCase();
+        let mimeType = `video/${fileExtension}`;
+        let fileName = `${uuidv4()}.${fileExtension}`; // Generating a unique filename
+
+        let metaData = {
+            "Content-Type": mimeType,
+        };
+
+        fs.stat(file.path, function (statError, stats) {
+            if (statError) {
+                resolve(response);
+            }
+
+            minioClient.putObject(
+                uploadBucket,
+                fileName,
+                fileStream,
+                stats.size,
+                metaData,
+                function (uploadingError, etag) {
+                    if (uploadingError) {
+                        resolve(response);
+                    }
+
+                    let data = {
+                        url: `${process.env.MINIO_HOST}/${uploadBucket}/${fileName}`,
+                        info: {...etag, fileName},
+                    };
+                    response = {status: 200, data};
+                    resolve(response);
+                }
+            );
+        });
+    });
+};
+
+
 })(module.exports);
 
 // hint for image upload in minio
