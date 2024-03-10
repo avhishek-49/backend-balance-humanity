@@ -34,6 +34,8 @@ const {
 router.post("/create", protect, createCustomerPost); // Ensure field name matches your form
 //like comment part
 
+// router.post("/post-likes")
+
 
 router.get("/get-me", protect, getMeCustomerPost);
 router.get("/get-all", protect, readAllCustomerPost);

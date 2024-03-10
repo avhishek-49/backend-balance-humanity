@@ -21,32 +21,42 @@ const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
 
 
                 let customerProfiledata = await mysqlHelper.format(`
-                SELECT
-                bu.uuid,
-                concat(bu.first_name, " ",bu.last_name) ,
+                
+                SELECT 
+                p.id,
+                di.name as districtName,
+                p.description,
+                p.image_minio_url AS image,
+                CONCAT(bu.first_name, ' ', bu.last_name) AS fullName,
                 bu.email,
-                bu.mobile_number,
-                bu.profile_picture,
-                d.name as district_name,
+                case  WHEN bu.profile_picture IS NOT NULL THEN bu.profile_picture
+                ELSE "N/A"
+                END as profilePicture,
+                bu.mobile_number AS mobileNumber,
+                FROM_UNIXTIME(p.created_date / 1000, '%M %e, %Y') AS postDate,
                 CASE
-                    WHEN bu.customer_type = 1 THEN 'NormalCustomer'
-                    WHEN bu.customer_type = 2 THEN 'VictimCustomer'
-                    WHEN bu.customer_type = 3 THEN 'SuperCustomer'
-                    ELSE NULL
-                END AS customer_type,
+                    WHEN ac.account_number IS NOT NULL THEN ac.account_number
+                    ELSE 'N/A'
+                END AS accountNumber,
                 CASE
-                    WHEN ai.amount IS NULL THEN '0.00'
-                    ELSE ai.amount
-                END AS amount
+                WHEN ai.amount IS NULL THEN '0.00'
+                ELSE ai.amount
+            END AS amount
             FROM
-                db_balance_humanity.balance_humanity_users bu
-            LEFT JOIN
+                db_balance_humanity.balance_humanity_blog_post p
+                    LEFT JOIN
+                db_balance_humanity.balance_humanity_users bu ON p.customer_id = bu.uuid
+                    LEFT JOIN
+                db_balance_humanity.latitude_longitude_district_info di ON di.id = p.district_name
+                    LEFT JOIN
+                db_balance_humanity.customer_account_information AS ac ON ac.customer_id = bu.uuid
+                LEFT JOIN
                 db_balance_humanity.customer_account_information ai ON ai.customer_id = bu.id
-            
-            left join db_balance_humanity.latitude_longitude_district_info d on bu.district_id = d.id
-            WHERE
-                 bu.uuid = "${call.body.user.uuid}"
-            `)
+
+                where bu.uuid = "${call.body.user.uuid}"
+            ORDER BY p.id DESC`)
+
+         
 
                 let [profileResult] = await mysqlHelper.query(customerProfiledata);
 
