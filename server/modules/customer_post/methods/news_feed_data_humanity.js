@@ -39,7 +39,7 @@ const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
                 db_balance_humanity.latitude_longitude_district_info di ON di.id = p.district_name
                     LEFT JOIN
                 db_balance_humanity.customer_account_information AS ac ON ac.customer_id = bu.uuid
-            ORDER BY p.id DESC;`)
+            ORDER BY p.id DESC`)
 
                 let [everyCustomerPost] = await mysqlHelper.query(customerPostData);
 
