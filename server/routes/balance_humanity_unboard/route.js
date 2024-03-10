@@ -21,7 +21,7 @@ getProfileInformation
 //unboarding customers
 router.post("/login", login);
 router.post("/register", registerBalanceHumanity);
-router.post("/forgot-password", protect, forgotPassword);
+router.post("/forgot-password", forgotPassword);
 router.get("/get-district_dropdown", getDistrictDropDown);
 
 //admin part

@@ -9,7 +9,7 @@ module.exports = async (call, res) => {
         let response = {status: httpStatus.BAD_REQUEST, message: "Data Not found"};
 
         let userExistCheck = await mysqlHelper.format(
-            `SELECT uuid, customer_pin, password FROM sagar_test.balance_humanity_users WHERE mobile_number = "${call.mobileNumber}"`
+            `SELECT uuid, customer_pin, password FROM db_balance_humanity.balance_humanity_users WHERE mobile_number = "${call.mobileNumber}"`
         );
         let [userExistCheckResult] = await mysqlHelper.query(userExistCheck);
 
@@ -32,7 +32,7 @@ module.exports = async (call, res) => {
 
                 let newPassword = await bcrypt.hash(call.password, 10);
                 let updateQuery = await mysqlHelper.format(
-                    `Update sagar_test.balance_humanity_users set password = "${newPassword}"  WHERE mobile_number = "${call.mobileNumber}" `
+                    `Update db_balance_humanity.balance_humanity_users set password = "${newPassword}"  WHERE mobile_number = "${call.mobileNumber}" `
                 );
                 let [executeUpdateQuery] = await mysqlHelper.query(updateQuery);
 
