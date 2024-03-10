@@ -11,7 +11,7 @@ up: async (queryInterface, Sequelize) => {
             [
                 {
                     id: 1,
-                    uuid: v4(),
+                    uuid: "882ca103-fec1-45a9-b307-87b7d6f7daed",
                     first_name: "Abishek",
                     last_name: "Paudel",
                     email: "avhishekpoudel49@gmail.com",
@@ -35,7 +35,7 @@ up: async (queryInterface, Sequelize) => {
                 {
                     id: 2,
                     uuid: v4(),
-                    first_name: "Himal",
+                    first_name: "160b269b-a5c0-476f-86a2-ce75ea6f6979",
                     last_name: "Subedi",
                     email: "Himal@gmail.com",
                     mobile_number: "9898989898",
@@ -57,7 +57,7 @@ up: async (queryInterface, Sequelize) => {
 
                 {
                     id: 3,
-                    uuid: v4(),
+                    uuid: "b70a31e5-f5c9-4e1e-bb88-f2eb4b1cd788",
                     first_name: "Gaurav",
                     last_name: "Bhatta",
                     email: "gaurab@gmail.com",
