@@ -1,6 +1,6 @@
 "use strict";
 const httpStatus = require("http-status");
-const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
+const { longitudeLatitudeHelper, mysqlHelper } = require("../../../helpers");
 (() => {
     module.exports = async (call, res) => {
         try {
@@ -10,7 +10,6 @@ const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
             let [userResult] = await mysqlHelper.query(userInfo);
 
             if (userResult && userResult.length > 0) {
-                let nearestDistrict = await longitudeLatitudeHelper.fetchNearestDistricts(userResult[0].district_id);
             
 
 
@@ -39,7 +38,7 @@ const { longitudeLatitudeHelper, mysqlHelper } = require("./../../../helpers");
                 db_balance_humanity.latitude_longitude_district_info di ON di.id = p.district_name
                     LEFT JOIN
                 db_balance_humanity.customer_account_information AS ac ON ac.customer_id = bu.uuid
-            ORDER BY p.id DESC`)
+            ORDER BY p.id DESC `)
 
                 let [everyCustomerPost] = await mysqlHelper.query(customerPostData);
 

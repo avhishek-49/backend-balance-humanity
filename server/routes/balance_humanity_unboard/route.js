@@ -15,7 +15,8 @@ protect,
 getDistrictDropDown,
 loadBalance,
 transaction,
-getProfileInformation
+getProfileInformation,
+bankLists
 } = require("./index");
 (() => {
 //unboarding customers
@@ -23,6 +24,7 @@ router.post("/login", login);
 router.post("/register", registerBalanceHumanity);
 router.post("/forgot-password", forgotPassword);
 router.get("/get-district_dropdown", getDistrictDropDown);
+router.get("/get-bank-list", bankLists);
 
 //admin part
 router.get("/get-customer", protect, authorization(["superCustomer"]), getCustomerInfo);

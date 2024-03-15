@@ -15,8 +15,6 @@ let uploadImage = async (call, res) => {
     const {
         address,
         citizenship_number,
-        relationship,
-        user,
         description_of_victim,
         account_number,
         account_name
@@ -30,13 +28,13 @@ let uploadImage = async (call, res) => {
         return res.status(400).json({ message: "Citizenship number cannot be empty" });
     }
 
-    if (!relationship) {
-        return res.status(400).json({ message: "Relationship cannot be empty" });
-    }
+    // if (!relationship) {
+    //     return res.status(400).json({ message: "Relationship cannot be empty" });
+    // }
 
-    if (!user || !user.mobile_number) {
-        return res.status(400).json({ message: "User mobile number cannot be empty" });
-    }
+    // if (!user || !user.mobile_number) {
+    //     return res.status(400).json({ message: "User mobile number cannot be empty" });
+    // }
 
     if (!description_of_victim) {
         return res.status(400).json({ message: "Description of victim cannot be empty" });
@@ -51,6 +49,14 @@ let uploadImage = async (call, res) => {
     }
 
 
+    let userInfo = await mysqlHelper.format(`select mobile_number from db_balance_humanity.balance_humanity_kyc where mobile_number = "${call.body.user.mobile_number}" and is_verified =0`)
+    let [userResult] = await mysqlHelper.query(userInfo);
+
+    if(userResult && userResult.length >0)
+    {
+        return res.status(400).json({  message:"Kyc is already on pending!!!"});
+
+    }
 
 
 
@@ -69,12 +75,12 @@ let uploadImage = async (call, res) => {
                 uuid: v4(),
                 address: call.body.address,
                 citizenship_number: call.body.citizenship_number,
-                relationship: call.body.relationship,
+                relationship: "null",
                 mobile_number: call.body.user.mobile_number,
                 description_of_victim: call.body.description_of_victim,
                 account_number: call.body.account_number,
                 account_name: call.body.account_name,
-                status: 0,
+                is_verified: 0,
                 created_at: new Date().getTime(),
                 proof_image:`http://127.0.0.1:9000/${bucketName}/${uploadImage.data.info.fileName}`
             };
@@ -92,7 +98,7 @@ let uploadImage = async (call, res) => {
         return res.status(400).json({message:"Failed to setup kyc contact us"});
 
     } catch (error) {
-        return res.status(400).json("duplicate data entry try new one");
+        return res.status(400).json("Minio connection error!");
     }
 };
 

@@ -14,6 +14,7 @@ const getCustomerPost = require("../../modules/minio_image/get_my_post_customer.
 const setProfilePicture = require("../../modules/minio_image/update_profile_picture.js");
 const setVictimKyc = require("../../modules/minio_image/set_up_kyc.js");
 
+
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, `${__dirname}../../../../uploads`);

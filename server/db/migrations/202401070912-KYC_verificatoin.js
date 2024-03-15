@@ -17,40 +17,45 @@ up: async (queryInterface, Sequelize) => {
         },
         address: {
             type: DataTypes.STRING(50),
-            allowNull: false,
+            allowNull: true,
         },
         citizenship_number: {
             type: DataTypes.STRING(20),
-            allowNull: false,
+            allowNull: true,
         },
         relationship: {
             type: DataTypes.STRING(50),
-            allowNull: false,
-            unique: true,
+            allowNull: true,
+           
         },
         mobile_number: {
             type: DataTypes.STRING(20),
-            allowNull: false,
-            unique: true,
+            allowNull: true,
+        
         },
 
         description_of_victim: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
 
         account_number: {
             type: DataTypes.STRING(20),
-            allowNull: false,
+            allowNull: true,
         },
         account_name: {
             type: DataTypes.STRING(20),
-            allowNull: false,
+            allowNull: true,
+        },
+        
+        proof_image: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
         },
 
-        status: {
+        is_verified: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            allowNull: true,
             defaultValue: false,
         },
 
