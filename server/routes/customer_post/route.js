@@ -27,7 +27,9 @@ const {
     readAllCustomerPost,
     updateCustomerPost,
     deleteCustomerPost,
-    newsFeedData
+    newsFeedData,
+    getKycCustomerByuuid,
+    approveRejectKyc
 } = require("../../modules/customer_post/methods/index.js");
 
 // Define routes
@@ -42,5 +44,12 @@ router.get("/get-all", protect, readAllCustomerPost);
 router.put("/update", protect, updateCustomerPost);
 router.delete("/delete", protect, deleteCustomerPost);
 router.get("/news-feed-data", protect, newsFeedData);
+
+
+//kyc further part
+
+
+router.get("/get-kyc-customers/:uuid", getKycCustomerByuuid);
+router.post("/approve-reject-kyc", approveRejectKyc);
 
 module.exports = router;

@@ -40,7 +40,9 @@ router.get("/get-profile-information",protect, getProfileInformation);
 
 //kyc part
 router.delete("/delete-customer-kyc", protect, authorization(["superCustomer"]), deleteCustomerKyc);
-router.get("/get-customer-kyc", protect, authorization(["superCustomer"]), getCustomerInfoForKyc);
+// router.get("/get-customer-kyc", protect, authorization(["superCustomer"]), getCustomerInfoForKyc);
+router.get("/get-customer-kyc", getCustomerInfoForKyc);
+
 router.put("/verify-customer-kyc", protect, authorization(["superCustomer"]), verifyCustomerKyc);
 router.post("/create-customer-kyc", protect, createCustomerKyc);
 

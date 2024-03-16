@@ -1,7 +1,7 @@
 "use strict";
 
 (() => {
-    const {mysqlHelper} = require("./../../../helpers");
+    const {mysqlHelper} = require("../../../helpers");
     const httpStatus = require("http-status");
 
     module.exports = async (call, res) => {
@@ -10,9 +10,9 @@
 
             // let response = { status: httpStatus.BAD_REQUEST, message: "Data Not found" }
 
-            let basequery = `SELECT uuid, address, citizenship_number, relationship, mobile_number, description_of_victim, account_number,account_name,status
+            let basequery = `SELECT uuid, address, citizenship_number, relationship, mobile_number, description_of_victim, account_number,account_name,is_verified
     
-    FROM db_balance_humanity.balance_humanity_kyc WHERE true `;
+    FROM db_balance_humanity.balance_humanity_kyc WHERE true and is_verified = 0  order by id desc`;
 
             let paramsQuery = "";
 
