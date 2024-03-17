@@ -35,7 +35,7 @@ up: async (queryInterface, Sequelize) => {
                 {
                     id: 2,
                     uuid: v4(),
-                    first_name: "160b269b-a5c0-476f-86a2-ce75ea6f6979",
+                    first_name: "Himal",
                     last_name: "Subedi",
                     email: "Himal@gmail.com",
                     mobile_number: "9898989898",
